@@ -1,442 +1,106 @@
-# SIPENGO - Project Structure Visualization
+# 📂 SIPENGO Project Structure
 
-## 📂 Complete File Tree
+Understanding the architecture and directory layout is crucial for navigating the **SIPENGO** codebase. This document breaks down the folder structure, data flow, and feature map.
 
-```
+## 🌳 Complete File Tree
+
+SIPENGO follows a modular **Clean Architecture** pattern combined with **Feature-first** organization within the presentation layer.
+
+`	ext
 sipengo/
-│
-├── 📄 README.md                          # Project overview
-├── 📄 ARCHITECTURE.md                    # Architecture documentation
-├── 📄 IMPLEMENTATION_GUIDE.md            # Step-by-step guide
-├── 📄 PROJECT_SUMMARY.md                 # Complete feature summary
-├── 📄 QUICK_START.md                     # 5-minute setup guide
+├── 📄 README.md                          # Main project overview & setup
+├── 📄 ARCHITECTURE.md                    # Technical architecture & design decisions
+├── 📄 CONTRIBUTING.md                    # Guidelines for contributing and PRs
 ├── 📄 PROJECT_STRUCTURE.md               # This file
-├── 📄 supabase_setup.sql                 # Database schema
-├── 📄 pubspec.yaml                       # Dependencies
-├── 📄 .env.example                       # Environment template
+├── 📄 SETUP.md                           # Detailed local development guide
+├── 📄 supabase_setup.sql                 # Initial database schema setup
+├── 📄 supabase_migration_gmaps.sql       # Database migration for Maps integration
+├── 📄 pubspec.yaml                       # Flutter dependencies & assets
+├── 📄 .env                               # Environment variables (NOT tracked by Git)
 ├── 📄 .gitignore                         # Git ignore rules
 │
 └── lib/
+    ├── 📄 main.dart                      # Application entry point
     │
-    ├── 📄 main.dart                      # App entry point
-    │
-    ├── 📁 core/                          # Core utilities
+    ├── 📁 core/                          # Core utilities & global configurations
     │   ├── 📁 config/
-    │   │   └── 📄 supabase_config.dart   # Supabase credentials
+    │   │   └── 📄 supabase_config.dart   # Environment variable bindings for Supabase
     │   ├── 📁 constants/
-    │   │   ├── 📄 app_colors.dart        # Color palette
-    │   │   ├── 📄 app_strings.dart       # Text strings (ID)
-    │   │   └── 📄 storage_constants.dart # Storage config
+    │   │   ├── 📄 app_colors.dart        # Global color palette
+    │   │   ├── 📄 app_strings.dart       # Static string resources (Indonesian)
+    │   │   └── 📄 storage_constants.dart # Supabase Storage bucket names
     │   └── 📁 theme/
-    │       └── 📄 app_theme.dart         # Material theme
+    │       └── 📄 app_theme.dart         # Material Design 3 theme configuration
     │
-    ├── 📁 data/                          # Data layer
-    │   ├── 📁 models/
-    │   │   ├── 📄 family_model.dart      # Family data model
-    │   │   └── 📄 resident_model.dart    # Resident data model
-    │   ├── 📁 repositories/
-    │   │   ├── 📄 family_repository.dart # Family CRUD
-    │   │   └── 📄 resident_repository.dart # Resident CRUD
-    │   └── 📁 services/
-    │       ├── 📄 supabase_service.dart  # Supabase client
-    │       └── 📄 storage_service.dart   # Image upload
+    ├── 📁 data/                          # Data Layer (API, Network, Local Storage)
+    │   ├── 📁 models/                    # Data Transfer Objects (DTOs) with JSON serialization
+    │   │   ├── 📄 family_model.dart      
+    │   │   └── 📄 resident_model.dart    
+    │   ├── 📁 repositories/              # Implementations for data fetching & CRUD
+    │   │   ├── 📄 family_repository.dart 
+    │   │   └── 📄 resident_repository.dart
+    │   └── 📁 services/                  # Low-level service connectors
+    │       ├── 📄 supabase_service.dart  # Supabase client initializer
+    │       ├── 📄 storage_service.dart   # Cloud storage upload/download handler
+    │       └── 📄 export_service.dart    # PDF and Excel report generator
     │
-    ├── 📁 domain/                        # Business logic
-    │   └── 📁 enums/
-    │       ├── 📄 gender.dart            # Gender enum
-    │       └── 📄 relationship.dart      # Relationship enum
+    ├── 📁 domain/                        # Domain Layer (Abstract business logic)
+    │   └── 📁 enums/                     # Strongly-typed enumerations
+    │       ├── 📄 gender.dart            
+    │       └── 📄 relationship.dart      
     │
-    └── 📁 presentation/                  # UI layer
-        ├── 📁 providers/                 # State management
-        │   ├── 📄 auth_provider.dart     # Auth state
-        │   ├── 📄 family_provider.dart   # Family state
-        │   └── 📄 resident_provider.dart # Resident state
+    └── 📁 presentation/                  # Presentation Layer (UI & State)
+        ├── 📁 providers/                 # Riverpod State Management
+        │   ├── 📄 auth_provider.dart     # Authentication and session state
+        │   ├── 📄 family_provider.dart   # Family data caching and mutations
+        │   ├── 📄 resident_provider.dart # Resident data caching
+        │   └── 📄 statistics_provider.dart # Dashboard metrics state
         │
-        └── 📁 screens/
+        └── 📁 screens/                   # Feature-based UI routing
             ├── 📁 auth/
-            │   └── 📄 login_screen.dart  # Login page
+            │   └── 📄 login_screen.dart  
+            ├── 📁 splash/
+            │   └── 📄 splash_screen.dart 
             ├── 📁 home/
-            │   └── 📄 home_screen.dart   # Family list
+            │   ├── 📄 home_screen.dart   
+            │   └── 📁 widgets/           # Home-specific components
+            │       └── 📄 statistics_dashboard.dart
             └── 📁 family/
-                ├── 📄 family_detail_screen.dart # Family detail
-                └── 📁 widgets/
-                    └── 📄 lineage_tree_view.dart # Members list
-```
+                ├── 📄 family_detail_screen.dart
+                ├── 📄 family_form_screen.dart
+                └── 📁 widgets/           # Family-specific sub-components
+                    └── 📄 lineage_tree_view.dart
+`
 
 ---
 
-## 🔄 Data Flow Architecture
+## 🔄 Data Flow Architecture (MVVM & Clean Architecture)
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         USER INTERFACE                       │
-│  (Screens: Login, Home, Family Detail, Lineage Tree)        │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    STATE MANAGEMENT                          │
-│         (Riverpod Providers: Auth, Family, Resident)        │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      REPOSITORIES                            │
-│     (Business Logic: CRUD, Search, Validation)              │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                        SERVICES                              │
-│    (Supabase Client, Storage Service, Auth Service)         │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    SUPABASE BACKEND                          │
-│         (PostgreSQL, Auth, Storage, RLS Policies)           │
-└─────────────────────────────────────────────────────────────┘
-```
+SIPENGO uses **Riverpod** to bridge the UI (Presentation) with the data access layer seamlessly.
 
----
-
-## 🗄️ Database Schema
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                         auth.users                           │
-│  (Managed by Supabase Auth)                                 │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         │ created_by (FK)
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                         families                             │
-├─────────────────────────────────────────────────────────────┤
-│  • id (UUID, PK)                                            │
-│  • kk_number (String, Unique)                               │
-│  • address (Text)                                           │
-│  • head_of_household (String)                               │
-│  • house_photo_url (String, nullable)                       │
-│  • latitude / longitude (Decimal, nullable)                 │
-│  • created_at / updated_at (Timestamp)                      │
-│  • created_by (UUID, FK → auth.users)                       │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         │ family_id (FK)
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│                        residents                             │
-├─────────────────────────────────────────────────────────────┤
-│  • id (UUID, PK)                                            │
-│  • family_id (UUID, FK → families)                          │
-│  • nik (String, Unique)                                     │
-│  • full_name (String)                                       │
-│  • birth_date (Date)                                        │
-│  • gender (Enum: male, female)                              │
-│  • relationship (Enum: head, wife, child, etc.)             │
-│  • parent_id (UUID, FK → residents, nullable) ◄─┐           │
-│  • created_at / updated_at (Timestamp)           │           │
-└──────────────────────────────────────────────────┘           │
-                         │                                     │
-                         └─────────────────────────────────────┘
-                              (Self-referencing for lineage)
-
-┌─────────────────────────────────────────────────────────────┐
-│                   storage.house-photos                       │
-│  (Supabase Storage Bucket)                                  │
-│  • Public read access                                       │
-│  • Authenticated write access                               │
-└─────────────────────────────────────────────────────────────┘
-```
+`mermaid
+graph TD
+    UI[User Interface / Screens] -->|Listens & Triggers| PROV[State Management / Riverpod Providers]
+    PROV -->|Calls| REPO[Repositories]
+    REPO -->|Fetches/Mutates via| SERV[Services / Supabase Client]
+    SERV -->|HTTP/WebSockets| DB[(Supabase PostgreSQL & Storage)]
+    
+    DB -->|Returns JSON| SERV
+    SERV -->|Returns Data Objects| REPO
+    REPO -->|Parses via Models| PROV
+    PROV -->|Updates State| UI
+`
 
 ---
 
 ## 🎯 Feature Map
 
-```
-SIPENGO
-│
-├── 🔐 Authentication
-│   ├── Login (Email/Password)
-│   ├── Session Management
-│   └── Logout
-│
-├── 👨‍👩‍👧‍👦 Family Management
-│   ├── View All Families
-│   ├── Search Families (KK, Name, Address)
-│   ├── View Family Details
-│   │   ├── House Photo Display
-│   │   ├── Family Information
-│   │   └── Member List (Lineage)
-│   ├── Create Family (TODO)
-│   ├── Edit Family (TODO)
-│   └── Delete Family ✓
-│
-├── 👤 Resident Management
-│   ├── View Family Members
-│   ├── Lineage Tree Display
-│   │   ├── Hierarchical Sorting
-│   │   ├── Relationship Badges
-│   │   ├── Age Calculation
-│   │   └── Gender Icons
-│   ├── Create Resident (TODO)
-│   ├── Edit Resident (TODO)
-│   └── Delete Resident (TODO)
-│
-└── 📸 House Photography
-    ├── Upload to Storage ✓
-    ├── Display in Detail ✓
-    ├── Update Photo ✓
-    └── Delete Photo ✓
-```
+A quick lookup of where features live in the application logic:
 
----
-
-## 🔄 Screen Navigation Flow
-
-```
-┌─────────────────┐
-│  Login Screen   │
-│  (Not Auth)     │
-└────────┬────────┘
-         │ Login Success
-         ▼
-┌─────────────────┐
-│  Home Screen    │
-│  (Family List)  │
-└────────┬────────┘
-         │ Tap Family
-         ▼
-┌─────────────────────────┐
-│  Family Detail Screen   │
-│  • House Photo          │
-│  • Family Info          │
-│  • Lineage Tree         │
-└────────┬────────────────┘
-         │ Add Resident (TODO)
-         ▼
-┌─────────────────────────┐
-│  Resident Form Screen   │
-│  (To Be Implemented)    │
-└─────────────────────────┘
-```
-
----
-
-## 🎨 Component Hierarchy
-
-```
-MyApp (ProviderScope)
-│
-├── MaterialApp
-│   ├── Theme (AppTheme.lightTheme)
-│   │
-│   └── Home Widget (Auth Check)
-│       │
-│       ├── LoginScreen (if not authenticated)
-│       │   ├── Email TextField
-│       │   ├── Password TextField
-│       │   └── Login Button
-│       │
-│       └── HomeScreen (if authenticated)
-│           ├── AppBar (with Logout)
-│           ├── Search TextField
-│           ├── Family List
-│           │   └── Family Cards
-│           │       └── → FamilyDetailScreen
-│           │           ├── House Photo
-│           │           ├── Family Info Card
-│           │           └── LineageTreeView
-│           │               └── Resident Cards
-│           └── FAB (Add Family)
-```
-
----
-
-## 📦 State Management Flow
-
-```
-UI Component
-    │
-    │ ref.watch(provider)
-    ▼
-Provider (FutureProvider / StateNotifierProvider)
-    │
-    │ calls
-    ▼
-Repository
-    │
-    │ uses
-    ▼
-Service (Supabase / Storage)
-    │
-    │ communicates with
-    ▼
-Supabase Backend
-```
-
-**Example: Loading Families**
-```
-HomeScreen
-    │ ref.watch(familiesProvider)
-    ▼
-FamilyProvider (FutureProvider)
-    │ calls getAllFamilies()
-    ▼
-FamilyRepository
-    │ uses SupabaseService.families
-    ▼
-SupabaseService
-    │ client.from('families').select()
-    ▼
-Supabase Database
-```
-
----
-
-## 🔐 Security Layers
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Layer 1: Flutter App (Client-Side Validation)             │
-│  • Form validation                                          │
-│  • Input sanitization                                       │
-│  • Type safety                                              │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│  Layer 2: Supabase Auth (Authentication)                    │
-│  • JWT tokens                                               │
-│  • Session management                                       │
-│  • User verification                                        │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│  Layer 3: Row Level Security (Authorization)                │
-│  • Authenticated-only access                                │
-│  • User-based permissions                                   │
-│  • Automatic policy enforcement                             │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────────────┐
-│  Layer 4: PostgreSQL (Data Integrity)                       │
-│  • Foreign key constraints                                  │
-│  • Unique constraints                                       │
-│  • Type validation                                          │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📊 Data Models Relationship
-
-```
-FamilyModel
-├── id: String
-├── kkNumber: String
-├── address: String
-├── headOfHousehold: String
-├── housePhotoUrl: String?
-├── latitude: double?
-├── longitude: double?
-├── createdAt: DateTime
-└── updatedAt: DateTime
-    │
-    │ has many
-    ▼
-ResidentModel
-├── id: String
-├── familyId: String ──────┐ (FK to Family)
-├── nik: String            │
-├── fullName: String       │
-├── birthDate: DateTime    │
-├── gender: Gender         │
-├── relationship: Relationship
-├── parentId: String? ─────┘ (Self-referencing FK)
-├── createdAt: DateTime
-└── updatedAt: DateTime
-```
-
----
-
-## 🎯 Implementation Status
-
-### ✅ Completed (Phase 1)
-- [x] Database schema
-- [x] Authentication system
-- [x] Data models
-- [x] Repositories
-- [x] State management
-- [x] Login screen
-- [x] Home screen
-- [x] Family detail screen
-- [x] Lineage tree view
-- [x] Image upload service
-- [x] Search functionality
-- [x] Delete operations
-
-### 🚧 To Be Implemented (Phase 2)
-- [ ] Family form screen
-- [ ] Resident form screen
-- [ ] Edit operations UI
-- [ ] Image picker integration
-- [ ] Form validation UI
-- [ ] Error handling UI
-
-### 🔮 Future Enhancements (Phase 3)
-- [ ] Statistics dashboard
-- [ ] Export to PDF/Excel
-- [ ] Map view
-- [ ] Advanced filters
-- [ ] Offline support
-- [ ] Push notifications
-
----
-
-## 📝 File Size Overview
-
-```
-Total Files Created: 26
-Total Lines of Code: ~2,500+
-
-Breakdown:
-├── Documentation: 5 files (~1,500 lines)
-├── Core: 4 files (~200 lines)
-├── Data Layer: 6 files (~600 lines)
-├── Domain: 2 files (~50 lines)
-├── Presentation: 8 files (~1,000 lines)
-└── Configuration: 1 file (~150 lines)
-```
-
----
-
-## 🎓 Code Organization Principles
-
-### Clean Architecture
-```
-Presentation → Domain → Data
-     ↓           ↓        ↓
-   UI Logic   Business  External
-              Rules     Services
-```
-
-### SOLID Principles
-- **S**ingle Responsibility: Each class has one job
-- **O**pen/Closed: Open for extension, closed for modification
-- **L**iskov Substitution: Subtypes are substitutable
-- **I**nterface Segregation: Small, focused interfaces
-- **D**ependency Inversion: Depend on abstractions
-
-### Design Patterns Used
-- **Repository Pattern**: Data access abstraction
-- **Provider Pattern**: State management (Riverpod)
-- **Factory Pattern**: Model creation from JSON
-- **Singleton Pattern**: Supabase client instance
-
----
-
-This structure provides a solid foundation for a scalable, maintainable application! 🚀
+- **🔐 Authentication**: lib/presentation/providers/auth_provider.dart
+- **👨‍👩‍👧‍👦 Family Management (CRUD)**: lib/data/repositories/family_repository.dart
+- **👤 Resident Management**: lib/data/repositories/resident_repository.dart
+- **🌳 Lineage Tree Display**: UI handled in lib/presentation/screens/family/widgets/lineage_tree_view.dart by grouping parent-child data.
+- **📸 House Photography**: Upload via storage_service.dart, state tracked in forms.
+- **📊 Statistics Dashboard**: Aggregated globally via statistics_provider.dart.
+- **📤 Data Export (PDF/Excel)**: Handled by lib/data/services/export_service.dart.
