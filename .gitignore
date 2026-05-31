@@ -94,3 +94,9 @@ GITHUB_PUSH_CHECKLIST.md
 PROJECT_ANALYSIS.md
 PUSH_SUMMARY.md
 QUICK_REFERENCE.md
+
+# AI Tool Metadata & Local Dev Scripts
+.antigravitycli/
+.gemini/
+watch_exports.ps1
+flutter_01.png

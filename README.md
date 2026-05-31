@@ -1,155 +1,173 @@
 <h1 align="center">
   <br>
-  <img src="assets/images/dashboard logo.png" alt="SIPENGO Logo" width="200"/>
+  <img src="assets/images/dashboard logo.png" alt="SIPENGO Logo" width="180"/>
   <br>
-  SIPENGO
+  <b>SIPENGO</b>
   <br>
+  <sub>Sistem Informasi Penduduk Gombang</sub>
 </h1>
 
-<h4 align="center">Sistem Informasi Penduduk Gombang</h4>
-
 <p align="center">
-  <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-3.7.2-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter"></a>
-  <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-3.7.2-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart"></a>
-  <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase"></a>
-  <a href="#license"><img src="https://img.shields.io/badge/License-Proprietary-red.svg?style=for-the-badge" alt="License"></a>
+  <a href="https://flutter.dev"><img src="https://img.shields.io/badge/Flutter-3.7.2%2B-02569B?style=flat-secondary&logo=flutter&logoColor=white" alt="Flutter"></a>
+  <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-3.7.2%2B-0175C2?style=flat-secondary&logo=dart&logoColor=white" alt="Dart"></a>
+  <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-Database%20%26%20Auth-3ECF8E?style=flat-secondary&logo=supabase&logoColor=white" alt="Supabase"></a>
+  <a href="https://pub.dev/packages/flutter_riverpod"><img src="https://img.shields.io/badge/Riverpod-State%20Management-blueviolet?style=flat-secondary&logo=riverpod&logoColor=white" alt="Riverpod"></a>
+  <img src="https://img.shields.io/badge/License-Proprietary-red?style=flat-secondary" alt="License">
 </p>
 
 <p align="center">
-  A comprehensive census and population management application for the village of Gombang. It enables village officials to digitally record, manage, and analyze family data with advanced features like family lineage tracking, photo documentation, and data export.
-</p>
-
-<p align="center">
-  <a href="#-key-features">Features</a> •
-  <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-getting-started">Getting Started</a> •
-  <a href="#-database-schema">Database</a> •
-  <a href="#-roadmap">Roadmap</a>
+  <b>SIPENGO</b> is a robust, production-grade census and population management application tailored for the village of Gombang. It empowers village administrators to digitally record, manage, and analyze demographic data. The application features family lineage visualization, secure photo uploads, geolocation integration, and offline-first local database caching.
 </p>
 
 ---
 
-## ✨ Key Features
+## 🚀 Key Features
 
-SIPENGO was designed to modernize the administrative workflow of Gombang village, ensuring data accuracy and ease of access.
+SIPENGO modernizes village administration through a suite of advanced features:
 
-- 🔐 **Secure Authentication:** Email and password login exclusively for village officials, powered by Supabase Auth.
-- 👨‍👩‍👧‍👦 **Family Management (Kartu Keluarga):** Complete CRUD capabilities for managing family records.
-- 👤 **Resident Profiles:** Detailed individual resident management including NIK, birth dates, and demographics.
-- 🌳 **Lineage Tracking:** Visual family tree mapping parent-child relationships intuitively.
-- 📸 **House Photography:** Capture, upload, and securely store house photos integrated with cloud storage.
-- 🗺️ **Google Maps Integration:** Pinpoint and retrieve family addresses via Google Maps URLs.
-- 📊 **Real-time Analytics:** Dashboard tracking total families, residents, gender distribution, and verified photos.
-- 📤 **Comprehensive Export:** Generate and share reports in **PDF** or **Excel (.xlsx)** formats instantly.
+*   🔐 **Secure Authentication** — Single-user access control for village officials using Supabase Go-based Auth.
+*   👨‍👩‍👧‍👦 **Family Registry (Kartu Keluarga)** — Seamless management (CRUD) of family units and address metadata.
+*   👤 **Resident Management** — Profile indexing for individual residents, tracking demographic attributes, birth dates, and familial roles.
+*   🌳 **Visual Lineage Tree** — Interactive, hierarchically rendered family tree mapping parents and children.
+*   📸 **Cloud Photo Storage** — Built-in camera integration with image compression and secure uploads to Supabase Storage.
+*   🗺️ **Google Maps Integration** — Coordinate capture and maps linking to pinpoint family residences.
+*   📊 **Analytics Dashboard** — Visualized statistics detailing population size, gender distribution, and verification progress.
+*   📤 **Multi-format Exports** — Generate professional reports instantly in **PDF** or **Excel (.xlsx)** formats.
+*   ⚡ **Offline Cache (Hive)** — Seamless caching mechanism enabling quick access and fast load times.
 
-## 💻 Tech Stack
+---
 
-SIPENGO is built using a modern, scalable, and cross-platform stack:
+## 🛠️ Tech Stack & Architecture
 
-| Category | Technology | Description |
-| :--- | :--- | :--- |
-| **Frontend** | [Flutter](https://flutter.dev) | Cross-platform UI toolkit (Dart 3.7.2+) |
-| **State Management** | [Riverpod](https://riverpod.dev) | Reactive caching and data-binding framework |
-| **Backend & Auth** | [Supabase](https://supabase.com) | Open-source Firebase alternative (PostgreSQL) |
-| **File Storage** | Supabase Storage | Robust cloud storage for housing photo assets |
-| **Architecture** | MVVM / Clean Arch | Separation of concerns for maintainability |
+### Technology Stack
+*   **Frontend SDK**: [Flutter](https://flutter.dev) (v3.7.2+) & [Dart](https://dart.dev) (v3.7.2+)
+*   **State Management**: [Riverpod](https://riverpod.dev) (v2.6.1+)
+*   **Backend Database**: [Supabase](https://supabase.com) (PostgreSQL)
+*   **Local Caching**: [Hive](https://pub.dev/packages/hive) (Key-value local database)
+*   **Reporting & Storage**: [pdf](https://pub.dev/packages/pdf), [excel](https://pub.dev/packages/excel), Supabase Storage
 
-## 🚀 Getting Started
+### Architecture Principle
+SIPENGO is structured using **Clean Architecture** patterns separated into distinct layers to guarantee testability and maintainability:
 
-Follow these instructions to set up the project locally for development and testing.
+```text
+lib/
+├── core/             # Global configurations, design systems, themes, and helper utilities
+│   ├── config/       # Environment variables binding
+│   ├── constants/    # Static assets, strings, and colors definition
+│   └── theme/        # Material Design 3 app themes
+├── data/             # Models (DTOs), Repository Implementations, and Service layers
+│   ├── models/       # Data transfer objects with JSON converters
+│   ├── repositories/ # Abstract repository implementations
+│   └── services/     # API connectors, Cloud Storage, and Document Exporters
+├── domain/           # Business entities and core enums
+└── presentation/     # UI Layer: Screens, custom widgets, and Riverpod providers
+```
+
+For a comprehensive guide, please refer to the [ARCHITECTURE.md](ARCHITECTURE.md) and [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) files.
+
+---
+
+## 💻 Local Development Setup
+
+Follow these steps to establish a local development environment.
 
 ### Prerequisites
+*   **Flutter SDK** (v3.7.2 or higher)
+*   **Dart SDK** (v3.7.2 or higher)
+*   **Git**
+*   A **Supabase** account
 
-Ensure you have the following installed on your local machine:
-- **Flutter SDK** (v3.7.2 or higher)
-- **Dart SDK** (v3.7.2 or higher)
-- **Git**
-- A **Supabase** account (Free tier is sufficient)
+### 1. Clone the Project
+```bash
+git clone https://github.com/azcharia/sipengo.git
+cd sipengo
+```
 
-### Installation
+### 2. Configure the Supabase Backend
+1. Create a new project on your [Supabase Dashboard](https://supabase.com).
+2. Go to the **SQL Editor** in Supabase and run the SQL instructions located in [supabase_setup.sql](supabase_setup.sql) to initialize your database schema, RLS policies, triggers, and indices.
+3. Run the SQL script in [supabase_migration_gmaps.sql](supabase_migration_gmaps.sql) to update the table structure with Google Maps integration.
+4. Go to **Storage** and create a public bucket named `house-photos` for storing house photography.
 
-1. **Clone the repository:**
-   `ash
-   git clone https://github.com/azcharia/sipengo.git
-   cd sipengo
-   `
+### 3. Setup Environment Variables
+Create a `.env` file in the project root by copying the template file:
+```bash
+cp .env.example .env
+```
+Open `.env` and fill in your Supabase credentials:
+```env
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_ANON_KEY=your-anon-key-here
+```
+> [!IMPORTANT]
+> The `.env` file is excluded from Git tracking via `.gitignore` to prevent leaking private credentials.
 
-2. **Configure the Database:**
-   - Create a new project on [Supabase](https://supabase.com).
-   - Navigate to the SQL Editor and execute the contents of supabase_setup.sql.
-   - For Google Maps column migrations, execute supabase_migration_gmaps.sql.
+### 4. Build and Run
+Retrieve dependencies, generate assets, and start the development server using the environment variables file:
 
-3. **Set up Environment Variables:**
-   Create a .env file in the root directory and add your Supabase credentials:
-   `nv
-   SUPABASE_URL=https://your-project-id.supabase.co
-   SUPABASE_ANON_KEY=your-anon-key-here
-   `
+```bash
+# Get Dart dependencies
+flutter pub get
 
-4. **Install Dependencies & Generate Icons:**
-   `ash
-   flutter pub get
-   flutter pub run flutter_launcher_icons
-   `
+# Generate launcher icons
+flutter pub run flutter_launcher_icons
 
-5. **Run the Application:**
-   `ash
-   flutter run
-   `
-   *(Supports Android, iOS, Web, Windows, macOS, and Linux)*
+# Run the app specifying the environment configuration file
+flutter run --dart-define-from-file=.env
+```
 
-## 📱 Screenshots
+---
 
-> *(Note: Add your actual application screenshots in the ssets/images/ folder and link them here for publication)*
+## 🗄️ Database Design
 
-| Home Dashboard |  Family Detail | Family Tree |
-| :---: | :---: | :---: |
-| <img src="assets/images/placeholder_home.png" width="200" alt="Home Screen"/> | <img src="assets/images/placeholder_detail.png" width="200" alt="Detail Screen"/> | <img src="assets/images/placeholder_tree.png" width="200" alt="Tree Screen"/> |
+SIPENGO uses a PostgreSQL database schema managed by Supabase. Here is a brief representation of the core schema:
 
-## 🗄️ Database Schema Concept
+```mermaid
+erDiagram
+    families ||--o{ residents : "contains"
+    families {
+        uuid id PK
+        varchar kk_number UK "16 characters"
+        text address
+        varchar head_of_household
+        text house_photo_url
+        decimal latitude
+        decimal longitude
+        text gmaps_link
+        timestamp created_at
+    }
+    residents {
+        uuid id PK
+        uuid family_id FK
+        varchar nik UK "16 characters"
+        varchar full_name
+        date birth_date
+        varchar gender "male | female"
+        varchar relationship "head | wife | husband | child | etc."
+        uuid parent_id FK "self-referencing for lineage"
+        timestamp created_at
+    }
+```
 
-SIPENGO relies on a robust relational database structure. Key tables include:
+*   **Row-Level Security (RLS)** is enabled on all tables. Only authenticated village administrators have permissions to insert, read, or modify database entries.
+*   **Cascading Deletes** are configured on the `residents` table to cleanly remove all members if a family card is deleted.
 
-- **amilies**: Stores Family Card (KK) details, address, head of household, GPS locations, and house photo URLs.
-- **
-esidents**: Stores individual citizens linked to a family, NIK, date of birth, gender, and hierarchical relationships (parent-child).
-- **storage.house-photos**: A Supabase storage bucket specifically configured for authenticated uploads of residential properties.
+---
 
-*Authentication and Row-Level Security (RLS) are strictly enforced to protect citizen privacy.*
+## 🤝 Contribution Guidelines
 
-## 📁 Source Code Structure
+This repository is maintained for the Gombang village administration. If you are developing new features:
+1. Create a new branch: `feature/your-feature-name` or `bugfix/your-bugfix-name`.
+2. Follow standard Dart formatting (`dart format .`).
+3. Ensure the project is free of lint warnings by running `flutter analyze`.
+4. Consult the [CONTRIBUTING.md](CONTRIBUTING.md) for pull request workflows.
 
-The project follows a modular **Clean Architecture** pattern to ensure scalability:
-
-`	ext
-lib/
-├── core/         # Configurations, themes, constants, and utilities
-├── data/         # Models, Repositories, and backend Services (Supabase)
-├── domain/       # Business logic entities and enums (Gender, Relationship)
-├── presentation/ # UI Layer: Screens, Widgets, and Riverpod State Providers
-└── main.dart     # Application entry point
-`
-*(For a deeper dive, refer to [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) and [ARCHITECTURE.md](ARCHITECTURE.md))*
-
-## 🤝 Contributing
-
-This repository is primarily maintained for the Gombang village administration. However, standard collaboration practices apply:
-1. Ensure you are on a new branch (eature/your-feature-name).
-2. Adhere to the established Dart style guide and Clean Architecture patterns.
-3. Test your changes locally before submitting a Pull Request.
+---
 
 ## 📝 License
 
 **Proprietary Software**  
-All rights reserved to the Gombang Village Administration.  
-Unauthorized copying, modification, or distribution of this software is strictly prohibited.
-
-## 📬 Contact & Support
-
-**Project Lead:** Azcharia  
-**Repository:** [github.com/azcharia/sipengo](https://github.com/azcharia/sipengo)
-
-If you encounter any issues, please refer to the Troubleshooting section in the [Wiki/Issues](https://github.com/azcharia/sipengo/issues) or consult the internal developer documentations provided in the repository.
+All rights reserved by the Gombang Village Administration. Any unauthorized copying, distribution, or modifications of this software is strictly prohibited.
 
 ---
 <p align="center">Made with ❤️ for Desa Gombang</p>
