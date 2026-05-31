@@ -12,7 +12,7 @@
   <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-3.7.2%2B-0175C2?style=flat-secondary&logo=dart&logoColor=white" alt="Dart"></a>
   <a href="https://supabase.com"><img src="https://img.shields.io/badge/Supabase-Database%20%26%20Auth-3ECF8E?style=flat-secondary&logo=supabase&logoColor=white" alt="Supabase"></a>
   <a href="https://pub.dev/packages/flutter_riverpod"><img src="https://img.shields.io/badge/Riverpod-State%20Management-blueviolet?style=flat-secondary&logo=riverpod&logoColor=white" alt="Riverpod"></a>
-  <img src="https://img.shields.io/badge/License-Proprietary-red?style=flat-secondary" alt="License">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-secondary" alt="License"></a>
 </p>
 
 <p align="center">
@@ -166,8 +166,7 @@ This repository is maintained for the Gombang village administration. If you are
 
 ## 📝 License
 
-**Proprietary Software**  
-All rights reserved by the Gombang Village Administration. Any unauthorized copying, distribution, or modifications of this software is strictly prohibited.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 <p align="center">Made with ❤️ for Desa Gombang</p>
