@@ -77,7 +77,7 @@ class StatisticsDashboard extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'SIPENGO',
+                      'SIPEN-GO',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 26,

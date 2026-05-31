@@ -1,6 +1,6 @@
-# SIPENGO - Development Setup Guide
+# SIPEN-GO - Development Setup Guide
 
-Complete guide for setting up SIPENGO development environment.
+Complete guide for setting up SIPEN-GO development environment.
 
 ## Prerequisites
 
@@ -26,8 +26,8 @@ Complete guide for setting up SIPENGO development environment.
 ## Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/azcharia/sipengo.git
-cd sipengo
+git clone https://github.com/azcharia/sipen-go.git
+cd sipen-go
 ```
 
 ## Step 2: Setup Supabase Project
@@ -36,7 +36,7 @@ cd sipengo
 1. Go to [supabase.com](https://supabase.com)
 2. Click "New Project"
 3. Fill in project details:
-   - Name: `sipengo` (or your preference)
+   - Name: `sipen-go` (or your preference)
    - Database Password: Create strong password
    - Region: Choose closest to your location
 4. Wait for project to initialize (2-3 minutes)

@@ -1,7 +1,7 @@
-# SIPENGO - Architecture & Implementation Plan
+# SIPEN-GO - Architecture & Implementation Plan
 
 ## 1. Project Overview
-**SIPENGO (Sistem Informasi Penduduk Gombang)** is a census and population management application for village officials to record and manage family data digitally.
+**SIPEN-GO (Sistem Informasi Penduduk Gombang)** is a census and population management application for village officials to record and manage family data digitally.
 
 ## 2. Tech Stack
 - **Frontend**: Flutter (Dart)

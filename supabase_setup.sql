@@ -1,5 +1,5 @@
 -- ============================================
--- SIPENGO Database Setup Script
+-- SIPEN-GO Database Setup Script
 -- Supabase PostgreSQL Schema
 -- ============================================
 

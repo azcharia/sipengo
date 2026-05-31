@@ -5,9 +5,9 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
-import 'package:sipengo/data/repositories/family_repository.dart';
-import 'package:sipengo/data/repositories/resident_repository.dart';
-import 'package:sipengo/data/models/resident_model.dart';
+import 'package:sipen_go/data/repositories/family_repository.dart';
+import 'package:sipen_go/data/repositories/resident_repository.dart';
+import 'package:sipen_go/data/models/resident_model.dart';
 
 class ExportService {
   final FamilyRepository _familyRepo;
@@ -102,7 +102,7 @@ class ExportService {
       // Save file
       final directory = await getApplicationDocumentsDirectory();
       final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-      final filePath = '${directory.path}/SIPENGO_Data_$timestamp.xlsx';
+      final filePath = '${directory.path}/SIPEN-GO_Data_$timestamp.xlsx';
 
       final fileBytes = excel.save();
       if (fileBytes != null) {
@@ -112,7 +112,7 @@ class ExportService {
         // Share file
         await Share.shareXFiles(
           [XFile(filePath)],
-          subject: 'Data Penduduk SIPENGO',
+          subject: 'Data Penduduk SIPEN-GO',
           text: 'Export data penduduk Desa Gombang',
         );
       }
@@ -151,7 +151,7 @@ class ExportService {
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
                   pw.Text(
-                    'SIPENGO',
+                    'SIPEN-GO',
                     style: pw.TextStyle(
                       fontSize: 32,
                       fontWeight: pw.FontWeight.bold,
@@ -395,7 +395,7 @@ class ExportService {
       // Save file
       final directory = await getApplicationDocumentsDirectory();
       final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-      final filePath = '${directory.path}/SIPENGO_Laporan_$timestamp.pdf';
+      final filePath = '${directory.path}/SIPEN-GO_Laporan_$timestamp.pdf';
 
       final file = File(filePath);
       await file.writeAsBytes(await pdf.save());
@@ -403,7 +403,7 @@ class ExportService {
       // Share file
       await Share.shareXFiles(
         [XFile(filePath)],
-        subject: 'Laporan Penduduk SIPENGO',
+        subject: 'Laporan Penduduk SIPEN-GO',
         text: 'Laporan data penduduk Desa Gombang',
       );
     } catch (e) {

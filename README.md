@@ -1,8 +1,8 @@
 <h1 align="center">
   <br>
-  <img src="assets/images/dashboard logo.png" alt="SIPENGO Logo" width="180"/>
+  <img src="assets/images/dashboard logo.png" alt="SIPEN-GO Logo" width="180"/>
   <br>
-  <b>SIPENGO</b>
+  <b>SIPEN-GO</b>
   <br>
   <sub>Sistem Informasi Penduduk Gombang</sub>
 </h1>
@@ -16,14 +16,14 @@
 </p>
 
 <p align="center">
-  <b>SIPENGO</b> is a robust, production-grade census and population management application tailored for the village of Gombang. It empowers village administrators to digitally record, manage, and analyze demographic data. The application features family lineage visualization, secure photo uploads, geolocation integration, and offline-first local database caching.
+  <b>SIPEN-GO</b> is a robust, production-grade census and population management application tailored for the village of Gombang. It empowers village administrators to digitally record, manage, and analyze demographic data. The application features family lineage visualization, secure photo uploads, geolocation integration, and offline-first local database caching.
 </p>
 
 ---
 
 ## 🚀 Key Features
 
-SIPENGO modernizes village administration through a suite of advanced features:
+SIPEN-GO modernizes village administration through a suite of advanced features:
 
 *   🔐 **Secure Authentication** — Single-user access control for village officials using Supabase Go-based Auth.
 *   👨‍👩‍👧‍👦 **Family Registry (Kartu Keluarga)** — Seamless management (CRUD) of family units and address metadata.
@@ -47,7 +47,7 @@ SIPENGO modernizes village administration through a suite of advanced features:
 *   **Reporting & Storage**: [pdf](https://pub.dev/packages/pdf), [excel](https://pub.dev/packages/excel), Supabase Storage
 
 ### Architecture Principle
-SIPENGO is structured using **Clean Architecture** patterns separated into distinct layers to guarantee testability and maintainability:
+SIPEN-GO is structured using **Clean Architecture** patterns separated into distinct layers to guarantee testability and maintainability:
 
 ```text
 lib/
@@ -79,8 +79,8 @@ Follow these steps to establish a local development environment.
 
 ### 1. Clone the Project
 ```bash
-git clone https://github.com/azcharia/sipengo.git
-cd sipengo
+git clone https://github.com/azcharia/sipen-go.git
+cd sipen-go
 ```
 
 ### 2. Configure the Supabase Backend
@@ -120,7 +120,7 @@ flutter run --dart-define-from-file=.env
 
 ## 🗄️ Database Design
 
-SIPENGO uses a PostgreSQL database schema managed by Supabase. Here is a brief representation of the core schema:
+SIPEN-GO uses a PostgreSQL database schema managed by Supabase. Here is a brief representation of the core schema:
 
 ```mermaid
 erDiagram

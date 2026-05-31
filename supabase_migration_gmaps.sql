@@ -1,5 +1,5 @@
 -- ============================================
--- SIPENGO Database Migration
+-- SIPEN-GO Database Migration
 -- Add Google Maps Link Field
 -- ============================================
 

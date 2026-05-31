@@ -1,6 +1,6 @@
 class AppStrings {
   // App Info
-  static const String appName = 'SIPENGO';
+  static const String appName = 'SIPEN-GO';
   static const String appFullName = 'Sistem Informasi Penduduk Gombang';
   static const String appDescription =
       'Aplikasi Pendataan Penduduk Desa Gombang';

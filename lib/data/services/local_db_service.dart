@@ -4,9 +4,9 @@ import '../models/family_model.dart';
 import '../models/resident_model.dart';
 
 class LocalDbService {
-  static const String _familiesBoxName = 'sipengo_families_box';
-  static const String _residentsBoxName = 'sipengo_residents_box';
-  static const String _pendingSyncBoxName = 'sipengo_pending_sync_box';
+  static const String _familiesBoxName = 'sipen_go_families_box';
+  static const String _residentsBoxName = 'sipen_go_residents_box';
+  static const String _pendingSyncBoxName = 'sipen_go_pending_sync_box';
 
   static late Box<String> _familiesBox;
   static late Box<String> _residentsBox;

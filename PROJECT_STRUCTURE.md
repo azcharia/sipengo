@@ -1,13 +1,13 @@
-# 📂 SIPENGO Project Structure
+# 📂 SIPEN-GO Project Structure
 
-Understanding the architecture and directory layout is crucial for navigating the **SIPENGO** codebase. This document breaks down the folder structure, data flow, and feature map.
+Understanding the architecture and directory layout is crucial for navigating the **SIPEN-GO** codebase. This document breaks down the folder structure, data flow, and feature map.
 
 ## 🌳 Complete File Tree
 
-SIPENGO follows a modular **Clean Architecture** pattern combined with **Feature-first** organization within the presentation layer.
+SIPEN-GO follows a modular **Clean Architecture** pattern combined with **Feature-first** organization within the presentation layer.
 
 `	ext
-sipengo/
+sipen-go/
 ├── 📄 README.md                          # Main project overview & setup
 ├── 📄 ARCHITECTURE.md                    # Technical architecture & design decisions
 ├── 📄 CONTRIBUTING.md                    # Guidelines for contributing and PRs
@@ -76,7 +76,7 @@ sipengo/
 
 ## 🔄 Data Flow Architecture (MVVM & Clean Architecture)
 
-SIPENGO uses **Riverpod** to bridge the UI (Presentation) with the data access layer seamlessly.
+SIPEN-GO uses **Riverpod** to bridge the UI (Presentation) with the data access layer seamlessly.
 
 `mermaid
 graph TD

@@ -1,6 +1,6 @@
-# Contributing to SIPENGO
+# Contributing to SIPEN-GO
 
-Thank you for your interest in contributing to SIPENGO! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to SIPEN-GO! This document provides guidelines for contributing to the project.
 
 ## Code of Conduct
 
@@ -351,4 +351,4 @@ By contributing, you agree that your contributions will be licensed under the sa
 
 ---
 
-Thank you for contributing to SIPENGO! 🎉
+Thank you for contributing to SIPEN-GO! 🎉
