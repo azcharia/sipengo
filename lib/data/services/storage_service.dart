@@ -15,7 +15,6 @@ class StorageService {
     try {
       final String fileName =
           '${familyId}_${DateTime.now().millisecondsSinceEpoch}.jpg';
-      final String path = '${StorageConstants.housePhotosBucket}/$fileName';
 
       // Upload file
       await _storage

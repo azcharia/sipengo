@@ -102,6 +102,26 @@ class _ResidentFormScreenState extends ConsumerState<ResidentFormScreen> {
       return;
     }
 
+    // High-Level Sensus Integrity Validation: A family can only have exactly ONE Head of Household
+    if (_selectedRelationship == Relationship.head) {
+      final hasExistingHead = widget.familyMembers?.any((member) {
+        if (isEditMode && member.id == widget.resident!.id) {
+          return false; // Skip self in edit mode
+        }
+        return member.relationship.value == 'head';
+      }) ?? false;
+
+      if (hasExistingHead) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Gagal: Kepala Keluarga sudah ada di dalam KK ini!'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+        return;
+      }
+    }
+
     setState(() => _isLoading = true);
 
     try {
@@ -319,8 +339,7 @@ class _ResidentFormScreenState extends ConsumerState<ResidentFormScreen> {
                             '${member.fullName} (${member.relationship.label})',
                           ),
                         );
-                      })
-                      .toList(),
+                      }),
                 ],
                 onChanged: (value) {
                   setState(() => _selectedParentId = value);

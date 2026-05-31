@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_strings.dart';
 import 'data/services/supabase_service.dart';
+import 'data/services/local_db_service.dart';
 import 'presentation/screens/auth/login_screen.dart';
 import 'presentation/screens/home/home_screen.dart';
 import 'presentation/screens/splash/splash_screen.dart';
@@ -10,6 +11,9 @@ import 'presentation/providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Local Database Service (Hive Caching)
+  await LocalDbService.init();
 
   // Initialize Supabase
   await SupabaseService.initialize();

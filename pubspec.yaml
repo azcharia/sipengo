@@ -64,6 +64,9 @@ dependencies:
   
   # URL Launcher
   url_launcher: ^6.3.1
+  flutter_image_compress: ^2.4.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

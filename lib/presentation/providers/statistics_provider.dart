@@ -1,8 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/repositories/family_repository.dart';
-import '../../data/repositories/resident_repository.dart';
-import '../providers/family_provider.dart';
-import '../providers/resident_provider.dart';
+import '../../data/services/supabase_service.dart';
 
 class StatisticsData {
   final int totalFamilies;
@@ -23,37 +20,26 @@ class StatisticsData {
 }
 
 final statisticsProvider = FutureProvider<StatisticsData>((ref) async {
-  final familyRepo = ref.watch(familyRepositoryProvider);
-  final residentRepo = ref.watch(residentRepositoryProvider);
+  // Query only house_photo_url from families table to count families and verified photos
+  final familiesResponse = await SupabaseService.families.select('house_photo_url');
+  final familiesList = familiesResponse as List;
+  final totalFamilies = familiesList.length;
 
-  // Get all families
-  final families = await familyRepo.getAllFamilies();
-  final totalFamilies = families.length;
-
-  // Count verified photos
-  final verifiedPhotos =
-      families
-          .where((f) => f.housePhotoUrl != null && f.housePhotoUrl!.isNotEmpty)
-          .length;
+  final verifiedPhotos = familiesList.where((f) {
+    final url = f['house_photo_url'] as String?;
+    return url != null && url.isNotEmpty;
+  }).length;
 
   final photoPercentage =
       totalFamilies > 0 ? (verifiedPhotos / totalFamilies * 100) : 0.0;
 
-  // Get all residents from all families
-  int totalResidents = 0;
-  int maleCount = 0;
-  int femaleCount = 0;
+  // Query only gender from residents table to count residents and gender distribution
+  final residentsResponse = await SupabaseService.residents.select('gender');
+  final residentsList = residentsResponse as List;
+  final totalResidents = residentsList.length;
 
-  for (var family in families) {
-    final residents = await residentRepo.getResidentsByFamily(family.id);
-    totalResidents += residents.length;
-
-    final males = residents.where((r) => r.gender.value == 'male').length;
-    final females = residents.where((r) => r.gender.value == 'female').length;
-
-    maleCount += males;
-    femaleCount += females;
-  }
+  final maleCount = residentsList.where((r) => r['gender'] == 'male').length;
+  final femaleCount = residentsList.where((r) => r['gender'] == 'female').length;
 
   return StatisticsData(
     totalFamilies: totalFamilies,
@@ -64,3 +50,4 @@ final statisticsProvider = FutureProvider<StatisticsData>((ref) async {
     photoVerificationPercentage: photoPercentage,
   );
 });
+

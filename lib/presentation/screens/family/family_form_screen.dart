@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_strings.dart';
+import '../../../core/utils/coordinate_parser.dart';
 import '../../../data/models/family_model.dart';
 import '../../providers/family_provider.dart';
 
@@ -23,6 +24,8 @@ class _FamilyFormScreenState extends ConsumerState<FamilyFormScreen> {
   final _addressController = TextEditingController();
   final _headController = TextEditingController();
   final _gmapsLinkController = TextEditingController();
+  final _latitudeController = TextEditingController();
+  final _longitudeController = TextEditingController();
 
   File? _selectedImage;
   final ImagePicker _picker = ImagePicker();
@@ -33,20 +36,39 @@ class _FamilyFormScreenState extends ConsumerState<FamilyFormScreen> {
   @override
   void initState() {
     super.initState();
+    _gmapsLinkController.addListener(_parseGmapsLink);
     if (isEditMode) {
       _kkNumberController.text = widget.family!.kkNumber;
       _addressController.text = widget.family!.address;
       _headController.text = widget.family!.headOfHousehold;
       _gmapsLinkController.text = widget.family!.gmapsLink ?? '';
+      _latitudeController.text = widget.family!.latitude?.toString() ?? '';
+      _longitudeController.text = widget.family!.longitude?.toString() ?? '';
+    }
+  }
+
+  void _parseGmapsLink() {
+    final text = _gmapsLinkController.text.trim();
+    if (text.isNotEmpty) {
+      final coords = CoordinateParser.parse(text);
+      if (coords != null) {
+        setState(() {
+          _latitudeController.text = coords['latitude']!.toString();
+          _longitudeController.text = coords['longitude']!.toString();
+        });
+      }
     }
   }
 
   @override
   void dispose() {
+    _gmapsLinkController.removeListener(_parseGmapsLink);
     _kkNumberController.dispose();
     _addressController.dispose();
     _headController.dispose();
     _gmapsLinkController.dispose();
+    _latitudeController.dispose();
+    _longitudeController.dispose();
     super.dispose();
   }
 
@@ -122,8 +144,8 @@ class _FamilyFormScreenState extends ConsumerState<FamilyFormScreen> {
         address: _addressController.text.trim(),
         headOfHousehold: _headController.text.trim(),
         housePhotoUrl: widget.family?.housePhotoUrl,
-        latitude: widget.family?.latitude,
-        longitude: widget.family?.longitude,
+        latitude: double.tryParse(_latitudeController.text.trim()),
+        longitude: double.tryParse(_longitudeController.text.trim()),
         gmapsLink:
             _gmapsLinkController.text.trim().isEmpty
                 ? null
@@ -150,6 +172,7 @@ class _FamilyFormScreenState extends ConsumerState<FamilyFormScreen> {
 
       // Refresh family list
       ref.invalidate(familiesProvider);
+      ref.invalidate(paginatedFamiliesProvider);
 
       if (mounted) {
         Navigator.pop(context);
@@ -269,7 +292,60 @@ class _FamilyFormScreenState extends ConsumerState<FamilyFormScreen> {
               ),
               keyboardType: TextInputType.url,
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 16),
+
+            // Coordinate Fields (Latitude & Longitude)
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _latitudeController,
+                    decoration: const InputDecoration(
+                      labelText: 'Latitude (Auto)',
+                      hintText: 'Contoh: -7.123456',
+                      prefixIcon: Icon(Icons.navigation),
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                    validator: (value) {
+                      if (value != null && value.isNotEmpty) {
+                        final lat = double.tryParse(value);
+                        if (lat == null) {
+                          return 'Angka tidak valid';
+                        }
+                        if (lat < -90.0 || lat > 90.0) {
+                          return 'Rentang: -90 s/d 90';
+                        }
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: TextFormField(
+                    controller: _longitudeController,
+                    decoration: const InputDecoration(
+                      labelText: 'Longitude (Auto)',
+                      hintText: 'Contoh: 110.123456',
+                      prefixIcon: Icon(Icons.navigation),
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                    validator: (value) {
+                      if (value != null && value.isNotEmpty) {
+                        final lng = double.tryParse(value);
+                        if (lng == null) {
+                          return 'Angka tidak valid';
+                        }
+                        if (lng < -180.0 || lng > 180.0) {
+                          return 'Rentang: -180 s/d 180';
+                        }
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 32),
 
             // Save Button

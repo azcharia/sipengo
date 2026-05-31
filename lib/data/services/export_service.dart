@@ -5,8 +5,9 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
-import '../repositories/family_repository.dart';
-import '../repositories/resident_repository.dart';
+import 'package:sipengo/data/repositories/family_repository.dart';
+import 'package:sipengo/data/repositories/resident_repository.dart';
+import 'package:sipengo/data/models/resident_model.dart';
 
 class ExportService {
   final FamilyRepository _familyRepo;
@@ -33,12 +34,37 @@ class ExportService {
         TextCellValue('Hubungan'),
       ]);
 
-      // Get all families
+      // Get all families and residents in single queries (O(1) database queries)
       final families = await _familyRepo.getAllFamilies();
+      final allResidents = await _residentRepo.getAllResidents();
+
+      // Map residents by familyId
+      final residentsMap = <String, List<ResidentModel>>{};
+      for (var resident in allResidents) {
+        residentsMap.putIfAbsent(resident.familyId, () => []).add(resident);
+      }
 
       // Add data
       for (var family in families) {
-        final residents = await _residentRepo.getResidentsByFamily(family.id);
+        final residents = residentsMap[family.id] ?? [];
+        
+        // Sort by relationship hierarchy in memory to match previous behavior
+        residents.sort((a, b) {
+          final hierarchyOrder = {
+            'head': 0,
+            'wife': 1,
+            'husband': 1,
+            'child': 2,
+            'grandchild': 3,
+            'parent': 4,
+            'grandparent': 5,
+            'sibling': 6,
+            'other': 7,
+          };
+          final orderA = hierarchyOrder[a.relationship.value] ?? 99;
+          final orderB = hierarchyOrder[b.relationship.value] ?? 99;
+          return orderA.compareTo(orderB);
+        });
 
         if (residents.isEmpty) {
           // Add family without residents
@@ -100,21 +126,20 @@ class ExportService {
     try {
       final pdf = pw.Document();
 
-      // Get all families
+      // Get all families and residents in single queries
       final families = await _familyRepo.getAllFamilies();
+      final allResidents = await _residentRepo.getAllResidents();
+
+      // Map residents by familyId
+      final residentsMap = <String, List<ResidentModel>>{};
+      for (var resident in allResidents) {
+        residentsMap.putIfAbsent(resident.familyId, () => []).add(resident);
+      }
 
       // Statistics
-      int totalResidents = 0;
-      int maleCount = 0;
-      int femaleCount = 0;
-
-      for (var family in families) {
-        final residents = await _residentRepo.getResidentsByFamily(family.id);
-        totalResidents += residents.length;
-        maleCount += residents.where((r) => r.gender.value == 'male').length;
-        femaleCount +=
-            residents.where((r) => r.gender.value == 'female').length;
-      }
+      final totalResidents = allResidents.length;
+      final maleCount = allResidents.where((r) => r.gender.value == 'male').length;
+      final femaleCount = allResidents.where((r) => r.gender.value == 'female').length;
 
       // Cover Page
       pdf.addPage(
@@ -179,7 +204,25 @@ class ExportService {
 
       // Data Pages
       for (var family in families) {
-        final residents = await _residentRepo.getResidentsByFamily(family.id);
+        final residents = residentsMap[family.id] ?? [];
+        
+        // Sort in memory to match previous relationship ordering
+        residents.sort((a, b) {
+          final hierarchyOrder = {
+            'head': 0,
+            'wife': 1,
+            'husband': 1,
+            'child': 2,
+            'grandchild': 3,
+            'parent': 4,
+            'grandparent': 5,
+            'sibling': 6,
+            'other': 7,
+          };
+          final orderA = hierarchyOrder[a.relationship.value] ?? 99;
+          final orderB = hierarchyOrder[b.relationship.value] ?? 99;
+          return orderA.compareTo(orderB);
+        });
 
         pdf.addPage(
           pw.Page(
@@ -339,7 +382,7 @@ class ExportService {
                               ),
                             ],
                           );
-                        }).toList(),
+                        }),
                       ],
                     ),
                 ],
